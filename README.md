@@ -2,7 +2,7 @@
 
 ### Date created
 Include the date you created this project and README file.
-10/12/2024
+10/12/2024 for the README.md file
 
 ### Project Title
 Post Your Work on GitHub
