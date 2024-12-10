@@ -262,10 +262,7 @@ def main():
 
         # Display the selected filters
         while True:
-            print("\nYou selected the following filters:")
-            print(f"City: {city.capitalize()}")
-            print(f"Month: {month.capitalize() if month != 'all' else '* (All)'}")
-            print(f"Day: {day.capitalize() if day != 'all' else '* (All)'}")
+            print(f"\nFilters selected - City: {city.capitalize()}, Month: {month.capitalize()}, Day: {day.capitalize()}\n")
             print('-' * 40)
 
             reset = input("Do you want to proceed with these filters? Enter yes to proceed or no to reset.\n").strip().lower()
