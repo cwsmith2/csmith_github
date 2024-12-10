@@ -5,6 +5,9 @@ import pandas as pd
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
+MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 
+          'july', 'august', 'september', 'october', 'november', 'december']
+
 
 def get_valid_input(prompt, valid_inputs):
     """
@@ -119,7 +122,7 @@ def load_data(city, month, day):
 
     # Apply month filter
     if month != 'all':
-        month_index = ['january', 'february', 'march', 'april', 'may', 'june','july','august','september','october','november','december'].index(month) + 1
+        month_index = MONTHS.index(month) + 1
         df = df[df['month'] == month_index]
 
     # Apply day filter
