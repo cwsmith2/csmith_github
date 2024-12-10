@@ -5,6 +5,26 @@ import pandas as pd
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
+MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 
+          'july', 'august', 'september', 'october', 'november', 'december']
+
+
+def get_valid_input(prompt, valid_inputs):
+    """
+    Repeatedly prompt the user until they provide valid input.
+
+    Args:
+        prompt (str): The message to display to the user.
+        valid_inputs (dict): A dictionary of valid inputs and their corresponding values.
+
+    Returns:
+        str: The valid value selected by the user.
+    """
+    while True:
+        user_input = input(prompt).strip().lower()
+        if user_input in valid_inputs:
+            return valid_inputs[user_input]
+        print("Invalid input. Please try again.")
 
 def get_filters():
     """
@@ -27,12 +47,10 @@ def get_filters():
     }
 
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    while True:
-            city_input = input("Please choose a city: Chicago (ch), New York City (ny), Washington (wa): ").strip().lower()
-            if city_input in city_shortcuts:
-                 city = city_shortcuts[city_input]
-                 break
-            print("Invalid input. Please choose a valid city or shortcut.")
+    city = get_valid_input(
+    "Please choose a city: Chicago (ch), New York City (ny), Washington (wa): ",
+    city_shortcuts
+)
 
     # Added all the months if other data is used.
     month_shortcuts = {
@@ -54,12 +72,10 @@ def get_filters():
 
 
     # get user input for month (all, january, february, ... , june)
-    while True:
-        month_input = input("Choose a month to filter by: Jan, 1, February, ..., Dec, 12, or '*' for All: ").strip().lower()
-        if month_input in month_shortcuts:
-            month = month_shortcuts[month_input]
-            break
-        print("Invalid input. Please choose a valid month abbreviation, number, full name, or '*' for All.")
+    month = get_valid_input(
+    "Choose a month to filter by: Jan, 1, February, ..., Dec, 12, or '*' for All: ",
+    month_shortcuts
+    )
 
     day_shortcuts = {
         'mon': 'monday', '1': 'monday', 'monday': 'monday',
@@ -73,12 +89,10 @@ def get_filters():
     }
 
     # Get user input for day of the week
-    while True:
-        day_input = input("Choose a day to filter by: Mon, 1, Tuesday, ..., Sun, 7, or '*': ").strip().lower()
-        if day_input in day_shortcuts:
-            day = day_shortcuts[day_input]
-            break
-        print("Invalid input. Please choose a valid day abbreviation, number, full name, or '*'.")
+    day = get_valid_input(
+    "Choose a day to filter by: Mon, 1, Tuesday, ..., Sun, 7, or '*': ",
+    day_shortcuts
+    )
 
 
     print('-'*40)
@@ -108,7 +122,7 @@ def load_data(city, month, day):
 
     # Apply month filter
     if month != 'all':
-        month_index = ['january', 'february', 'march', 'april', 'may', 'june','july','august','september','october','november','december'].index(month) + 1
+        month_index = MONTHS.index(month) + 1
         df = df[df['month'] == month_index]
 
     # Apply day filter
@@ -248,10 +262,7 @@ def main():
 
         # Display the selected filters
         while True:
-            print("\nYou selected the following filters:")
-            print(f"City: {city.capitalize()}")
-            print(f"Month: {month.capitalize() if month != 'all' else '* (All)'}")
-            print(f"Day: {day.capitalize() if day != 'all' else '* (All)'}")
+            print(f"\nFilters selected - City: {city.capitalize()}, Month: {month.capitalize()}, Day: {day.capitalize()}\n")
             print('-' * 40)
 
             reset = input("Do you want to proceed with these filters? Enter yes to proceed or no to reset.\n").strip().lower()
